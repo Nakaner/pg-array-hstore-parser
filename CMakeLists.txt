@@ -18,40 +18,16 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 #
 #-----------------------------------------------------------------------------
 
-project(vectortile-generator)
+project(pg-array-hstore-parser)
 
-set(VTGENERATOR_VERSION_MAJOR 0)
-set(VTGENERATOR_VERSION_MINOR 0)
-set(VTGENERATOR_VERSION_PATCH 1)
+set(PG_ARRAY_HSTORE_PARSER_VERSION_MAJOR 0)
+set(PG_ARRAY_HSTORE_PARSER_VERSION_MINOR 0)
+set(PG_ARRAY_HSTORE_PARSER_VERSION_PATCH 1)
 
-set(VTGENERATOR_VERSION
-    ${VTGENERATOR_VERSION_MAJOR}.${VTGENERATOR_VERSION_MINOR}.${VTGENERATOR_VERSION_PATCH})
+set(PG_ARRAY_HSTORE_PARSER_VERSION
+    ${PG_ARRAY_HSTORE_PARSER_VERSION_MAJOR}.${PG_ARRAY_HSTORE_PARSER_VERSION_MINOR}.${PG_ARRAY_HSTORE_PARSER_VERSION_PATCH})
 
 set(AUTHOR "Michael Reichert <nakaner@gmx.net>")
-
-
-#-----------------------------------------------------------------------------
-#
-#  Find external dependencies
-#
-#-----------------------------------------------------------------------------
-
-find_package(Boost)
-include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
-
-find_package(Osmium COMPONENTS io geos proj)
-include_directories(SYSTEM ${OSMIUM_INCLUDE_DIRS})
-
-# PostgreSQL stuff taken from osm2pgsql cmake config
-if (NOT WIN32 AND NOT APPLE)
-  # No need for this path, just a workaround to make cmake check pass on all systems
-  set(PostgreSQL_TYPE_INCLUDE_DIR /usr/include)
-endif()
-find_package(PostgreSQL REQUIRED)
-include_directories(${PostgreSQL_INCLUDE_DIRS})
-
-find_package(PostgresDriver REQUIRED)
-include_directories(${POSTGRESDRIVERS_INCLUDE_DIRS})
 
 
 #-----------------------------------------------------------------------------
@@ -107,7 +83,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Dev")
     if(NOT MSVC)
         add_definitions(-Werror -fno-omit-frame-pointer)
     endif()
-    add_definitions(${OSMIUM_WARNING_OPTIONS})
 endif()
 
 # Force RelWithDebInfo build type if none was given
@@ -159,13 +134,6 @@ else()
     message(STATUS "Looking for cppcheck - not found")
     message(STATUS "  Build target 'cppcheck' will not be available.")
 endif(CPPCHECK)
-
-
-#-----------------------------------------------------------------------------
-
-add_definitions(${OSMIUM_WARNING_OPTIONS})
-
-add_subdirectory(src)
 
 
 #-----------------------------------------------------------------------------
