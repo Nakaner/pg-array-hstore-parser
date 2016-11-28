@@ -130,4 +130,19 @@ TEST_CASE("Test array parsing") {
         }
         REQUIRE(test_utils::compare_vectors(got, expected) == true);
     }
+
+    SECTION("array of chars") {
+        string_repr = R"({f, 9, K,l})";
+        std::vector<char> expected;
+        expected.push_back('f');
+        expected.push_back('9');
+        expected.push_back('K');
+        expected.push_back('l');
+        ArrayParser<CharConversion> array_parser (string_repr);
+        std::vector<char> got;
+        while (array_parser.has_next()) {
+            got.push_back(array_parser.get_next());
+        }
+        REQUIRE(test_utils::compare_vectors(got, expected) == true);
+    }
 }
