@@ -9,7 +9,6 @@
 #define SRC_POSTGRES_PARSER_HPP_
 
 namespace pg_array_hstore_parser {
-
     template <typename TSingleElementType>
     class PostgresParser {
     protected:

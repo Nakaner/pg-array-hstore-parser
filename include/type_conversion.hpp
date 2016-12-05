@@ -11,7 +11,6 @@
 #include <string>
 
 namespace pg_array_hstore_parser {
-
     /**
      * \brief TypeConversionImpl implementation to be used with TypeConversion class if the output format should be std::string.
      *
@@ -133,7 +132,6 @@ namespace pg_array_hstore_parser {
     using CharConversion = TypeConversion<CharConversionImpl>;
 
     using Int64Conversion = TypeConversion<Int64ConversionImpl>;
-
 } // namespace pg_array_hstore_parser
 
 #endif /* SRC_TYPE_CONVERSION_HPP_ */

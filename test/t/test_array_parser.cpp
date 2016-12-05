@@ -5,7 +5,6 @@
  *      Author: Michael Reichert
  */
 
-#include <vector>
 #include "catch.hpp"
 #include "util.hpp"
 #include <array_parser.hpp>
@@ -132,15 +131,38 @@ TEST_CASE("Test array parsing") {
         REQUIRE(test_utils::compare_vectors(got, expected) == true);
     }
 
-    SECTION("array of chars") {
-        string_repr = R"({f, 9, K,l})";
-        std::vector<char> expected;
-        expected.push_back('f');
-        expected.push_back('9');
-        expected.push_back('K');
-        expected.push_back('l');
-        pg_array_hstore_parser::ArrayParser<pg_array_hstore_parser::CharConversion> array_parser (string_repr);
-        std::vector<char> got;
+    SECTION("array with only one string containing an escaped double quote") {
+        string_repr = R"({"an\"y"})";
+        std::vector<std::string> expected;
+        expected.push_back("an\"y");
+        pg_array_hstore_parser::ArrayParser<pg_array_hstore_parser::StringConversion> array_parser (string_repr);
+        std::vector<std::string> got;
+        while (array_parser.has_next()) {
+            got.push_back(array_parser.get_next());
+        }
+        REQUIRE(test_utils::compare_vectors(got, expected) == true);
+    }
+
+    SECTION("array with only one string containing two escaped double quote") {
+        string_repr = R"({"He spoke: \"Any 'star' in the sky is yours.\""})";
+        std::vector<std::string> expected;
+        expected.push_back("He spoke: \"Any 'star' in the sky is yours.\"");
+        pg_array_hstore_parser::ArrayParser<pg_array_hstore_parser::StringConversion> array_parser (string_repr);
+        std::vector<std::string> got;
+        while (array_parser.has_next()) {
+            got.push_back(array_parser.get_next());
+        }
+        REQUIRE(test_utils::compare_vectors(got, expected) == true);
+    }
+
+    SECTION("array of strings, one contains an escaped double quote") {
+        string_repr = R"({"ab", "an\"y", "ham"})";
+        std::vector<std::string> expected;
+        expected.push_back("ab");
+        expected.push_back("an\"y");
+        expected.push_back("ham");
+        pg_array_hstore_parser::ArrayParser<pg_array_hstore_parser::StringConversion> array_parser (string_repr);
+        std::vector<std::string> got;
         while (array_parser.has_next()) {
             got.push_back(array_parser.get_next());
         }

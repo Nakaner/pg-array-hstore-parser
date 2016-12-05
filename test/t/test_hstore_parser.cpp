@@ -187,5 +187,16 @@ TEST_CASE( "Test hstore parser") {
         }
         REQUIRE(test_utils::compare_vectors(got, expected) == true);
     }
+
+    SECTION("empty hstore") {
+        string_repr = "";
+        std::vector<pg_array_hstore_parser::StringPair> expected {};
+        pg_array_hstore_parser::HStoreParser hstore_parser (string_repr);
+        std::vector<pg_array_hstore_parser::StringPair> got;
+        while (hstore_parser.has_next()) {
+            got.push_back(hstore_parser.get_next());
+        }
+        REQUIRE(test_utils::compare_vectors(got, expected) == true);
+    }
 }
 

@@ -26,6 +26,9 @@ namespace pg_array_hstore_parser {
         END = 4
     };
 
+    /**
+     * allows usage of ++HStoreParts
+     */
     HStoreParts& operator++(HStoreParts& progress) {
         progress = static_cast<HStoreParts>(static_cast<HStorePartsType>(progress) + 1);
         assert(progress <= HStoreParts::END);
@@ -131,7 +134,9 @@ namespace pg_array_hstore_parser {
          * has the parser reached the end of the hstore
          */
         bool has_next() {
-            if (m_current_position > m_string_repr.size() - MIN_KV_PAIR_LENGTH) {
+            // m_current_position >= m_string_repr.size() is necessary for empty hstores because m_current_position and
+            // m_string_repr.size() are unsigned.
+            if (m_current_position > m_string_repr.size() - MIN_KV_PAIR_LENGTH || m_current_position >= m_string_repr.size()) {
                 return false;
             }
             return true;
