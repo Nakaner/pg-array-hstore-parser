@@ -33,8 +33,8 @@ namespace pg_array_hstore_parser {
      *
      * \todo use C strings instead of std::string
      */
-    template <typename TypeConversion>
-    class ArrayParser : public PostgresParser<typename TypeConversion::output_type> {
+    template <typename TConversion>
+    class ArrayParser : public PostgresParser<typename TConversion::output_type> {
 
     protected:
         /**
@@ -45,12 +45,12 @@ namespace pg_array_hstore_parser {
         size_t m_max_length;
 
         /// shortcut
-        using postgres_parser_type = PostgresParser<typename TypeConversion::output_type>;
+        using postgres_parser_type = PostgresParser<typename TConversion::output_type>;
 
         /// track progress of hstore parsing
         ArrayParts m_parse_progress = ArrayParts::NONE;
 
-        TypeConversion m_type_conversion;
+        TConversion m_type_conversion;
 
         /**
          * Current position inside #m_string_repr
@@ -154,7 +154,7 @@ namespace pg_array_hstore_parser {
         }
 
     public:
-        ArrayParser(std::string& string_repr) : PostgresParser<typename TypeConversion::output_type>(string_repr) {
+        ArrayParser(std::string& string_repr) : PostgresParser<typename TConversion::output_type>(string_repr) {
             m_max_length = string_repr.length();
         };
 
@@ -180,7 +180,7 @@ namespace pg_array_hstore_parser {
          * contain curly braces, delimiter characters, double quotes, backslashes, or white space, or match
          * the word NULL. Double quotes and backslashes embedded in element values will be backslash-escaped.
          */
-        typename TypeConversion::output_type get_next() {
+        typename TConversion::output_type get_next() {
             m_parse_progress = ArrayParts::NONE;
             bool backslashes_before = false; // counts preceding backslashes
             bool quoted_element = false; // track if the key/value is surrounded by quotation marks
