@@ -1,41 +1,36 @@
-Vectortile-Generator
-====================
+pg-array-hstore-parser
+======================
 
-The Vectortile Generator is a Osmium-based C++ program to create vectortiles in
-OpenStreetMap's common data formats – OSM XML and OSM PBF. Its data source is a
-PostgreSQL database which was populated using the Cerepso import tool.
-
+pg-array-hstore-parser is a header-only C++ 11 library to parse the string representation of arrays and hstore
+fields of a PostgreSQL database.
 
 Dependencies
 ------------
 
-You have to install following dependencies
-
-* libosmium
-* postgres-drivers
-* libpq (use the packages of your distribution)
-* C++11 compiler, e.g. g++4.6 or newer
-
-
-Building
---------
-
-```
-mkdir build
-cd build
-ccmake ..
-make
-```
+* Catch testing framework (included in this repository)
+* cmake (for building the tests)
+* no other dependencies  except the standard library and a C++11 capable compiler.
 
 
 Unit Tests
 ----------
 
-Unit tests are located in the `test/` directory. We use the Catch framework, all
-necessary depencies are included in this repository.
+Unit tests are located in the `test/` directory. The Catch framework is used, all
+necessary dependencies are included in this repository.
+
+Build the tests:
+```mkdir build
+cd build
+cmake ..
+make```
+
+Run the tests:
+```
+make test
+```
 
 
 License
 -------
-This program is available under the terms of GNU General Public License 2.0 or
-newer. For the legal code of GNU General Public License 2.0 see the file COPYING.md in this directory.
+
+see COPYING.md
