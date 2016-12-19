@@ -5,7 +5,7 @@ pg-array-hstore-parser is a header-only C++ 11 library to parse the string repre
 fields of a PostgreSQL database. If you don't want to run the unit tests, you don't have to care for any dependencies.
 
 Dependencies
-------------
+============
 
 * Catch testing framework (included in this repository)
 * cmake (for building the tests)
@@ -13,7 +13,7 @@ Dependencies
 
 
 Unit Tests
-----------
+==========
 
 Unit tests are located in the `test/` directory. The Catch framework is used, all
 necessary dependencies are included in this repository.
@@ -94,13 +94,12 @@ for (int i = 0; i < tuple_count; i++) {
 ```
 
 License
--------
-
+=======
 see COPYING.md
 
 
 To Do
-------
+=====
 * performance improvements
 * build Doxygen documentation
 * add an example who to write your own type converter
