@@ -8,7 +8,8 @@ Dependencies
 ============
 
 * Catch testing framework (included in this repository)
-* cmake (for building the tests)
+* cmake (to build the tests)
+* Doxygen (to build the documentation)
 * no other dependencies  except the standard library and a C++11 capable compiler.
 
 
@@ -101,6 +102,5 @@ see COPYING.md
 To Do
 =====
 * performance improvements
-* build Doxygen documentation
 * add an example who to write your own type converter
 
