@@ -20,13 +20,15 @@ Unit tests are located in the `test/` directory. The Catch framework is used, al
 necessary dependencies are included in this repository.
 
 Build the tests:
-```mkdir build
+```sh
+mkdir build
 cd build
 cmake ..
-make```
+make
+```
 
 Run the tests:
-```
+```sh
 make test
 ```
 
@@ -38,7 +40,7 @@ This is a simple usage example using libpq for the database access.
 Hstore Parser
 ------------
 
-```
+```c++
 PGConn *database_connection = PGconnectdb("dbname=mytestdb");
 PGresult *result = PQexec(database_connection, "SELECT foo from testtable"); # assume that foo is a hstore column
 int tuple_count = PQntuples(result);
@@ -63,24 +65,24 @@ The library currently provides output type converters for following types:
 * `char` (using the first character of the string representing an array element)
 
 The library defines following aliases to reduce the amount of typing:
-```
+```c++
 using StringConversion = TypeConversion<StringConversionImpl>;
 using CharConversion = TypeConversion<CharConversionImpl>;
 using Int64Conversion = TypeConversion<Int64ConversionImpl>;
 ```
 
 This means you can instanciate an array parser which returns `int64_t` using:
-```
+```c++
 pg_array_hstore_parser::ArrayParser<pg_array_hstore_parser::Int64Conversion> array_parser(array_content);
 ```
 instead of
-```
+```c++
 pg_array_hstore_parser::ArrayParser<pg_array_hstore_parser::TypeConversion<pg_array_hstore_parser::Int64Conversion>> array_parser(array_content);
 ```
 
 You are free to implement your own conversion implementation for your user-defined type.
 
-```
+```c++
 PGConn *database_connection = PGconnectdb("dbname=mytestdb");
 PGresult *result = PQexec(database_connection, "SELECT foo from testtable"); # assume that foo is a `bigint[]` column
 int tuple_count = PQntuples(result);
